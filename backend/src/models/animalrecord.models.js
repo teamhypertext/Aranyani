@@ -13,6 +13,11 @@ const animalEventSchema = new mongoose.Schema(
       required: true
     },
 
+    img_url: {
+      type: String,
+      required: false
+    },
+
     location: {
       type: {
         type: String,
