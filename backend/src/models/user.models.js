@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
-    // For Firebase Cloud Messaging notifications
     fcmToken: {
       type: String,
       trim: true
@@ -23,19 +22,16 @@ const userSchema = new mongoose.Schema(
     lastLocation: {
       type: {
         type: String,
-        enum: ["Point"],
-        default: "Point"
+        enum: ["Point"]
       },
       coordinates: {
-        type: [Number],
-        default: undefined 
+        type: [Number]
       }
     }
   },
   { timestamps: true }
 );
 
-// Index for geospatial queries on lastLocation
 userSchema.index({ lastLocation: "2dsphere" });
 
 export default mongoose.model("User", userSchema);

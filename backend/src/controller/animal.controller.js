@@ -54,6 +54,9 @@ export const getNearbyAnimals = async (req, res) => {
     const longitude = parseFloat(lng);
     const latitude = parseFloat(lat);
 
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
     const animals = await AnimalEvent.find({
       location: {
         $near: {
@@ -63,6 +66,9 @@ export const getNearbyAnimals = async (req, res) => {
           },
           $maxDistance: 50000,
         },
+      },
+      detectedAt: {
+        $gte: sevenDaysAgo,
       },
     });
 
