@@ -1,10 +1,11 @@
 # Aranyani Project
 
-Aranyani is a full-stack application consisting of a Node.js/Express backend and a React Native (Expo) frontend. The project is structured to support animal detection and warning with record management.
+Aranyani is a full-stack application consisting of a Node.js/Express backend, a React Native (Expo) frontend, and an Edge AI (TinyML) wildlife detection module. The project is structured to support animal detection and warning with record management.
 
 ---
 
 ## Table of Contents
+
 - [Project Structure](#project-structure)
 - [Backend](#backend)
   - [Features](#backend-features)
@@ -13,6 +14,9 @@ Aranyani is a full-stack application consisting of a Node.js/Express backend and
 - [Frontend (User-side)](#frontend-user-side)
   - [Features](#frontend-features)
   - [Setup & Usage](#frontend-setup--usage)
+- [VanaRaksha (TinyML)](#vanaraksha-tinyml)
+  - [Features](#vanaraksha-features)
+  - [Architecture](#vanaraksha-architecture)
 - [Folder Structure](#folder-structure)
 - [Tech Stack](#tech-stack)
 - [Contributing](#contributing)
@@ -24,8 +28,11 @@ Aranyani is a full-stack application consisting of a Node.js/Express backend and
 
 ```
 Aranyani/
-├── backend/         # Node.js/Express backend API
-└── user-side/       # React Native (Expo) frontend app
+├── backend/                # Node.js/Express backend API
+├── tinyml/                 # VanaRaksha: Edge AI Wildlife Defense System
+│   └── 01_Training_Workspace/ # Model Training (PC/Cloud)
+│  
+└── user-side/              # React Native (Expo) frontend app
 ```
 
 ---
@@ -33,6 +40,7 @@ Aranyani/
 ## Backend
 
 ### Features
+
 - RESTful API using Express.js
 - MongoDB integration via Mongoose
 - JWT-based authentication
@@ -42,26 +50,33 @@ Aranyani/
 ### Setup & Usage
 
 1. **Install dependencies:**
+
    ```bash
    cd backend
    npm install
    ```
+
 2. **Configure environment:**
    - Create a `.env` file in `backend/` with your MongoDB URI and JWT secret:
+
      ```env
      MONGODB_URI=your_mongodb_uri
      JWT_SECRET=your_jwt_secret
      PORT=3000
      ```
+
 3. **Run the server:**
+
    ```bash
    npm run dev
    # or
    npm start
    ```
+
    The server will start on the port specified in `.env` (default: 3000).
 
 ### API Endpoints
+
 - `GET /` — Health check
 - `POST /api/v1/users` — User registration/login
 - `GET /api/v1/animal-records` — List animal records
@@ -72,6 +87,7 @@ Aranyani/
 ## Frontend (User-side)
 
 ### Features
+
 - Built with React Native and Expo
 - Modern UI with Tailwind CSS (NativeWind)
 - Navigation using Expo Router
@@ -81,23 +97,45 @@ Aranyani/
 ### Setup & Usage
 
 1. **Install dependencies:**
+
    ```bash
    cd user-side
    npm install
    ```
+
 2. **Start the app:**
+
    ```bash
    npm start
    # or
    expo start
    ```
+
    - Use Expo Go app or an emulator to preview the app.
+
+---
+
+## VanaRaksha (TinyML)
+
+VanaRaksha ("Forest Guard") is the offline, edge-AI component of Aranyani designed to run on Android smartphones in the field.
+
+### Features
+
+- **Species Detection:** Specifically trained for Elephant, Wild Boar, Human, Cheetah, Leopard.
+- **Privacy First:** All processing happens on-device.
+
+### Architecture
+
+1. **Training Workspace (`tinyml/01_Training_Workspace`):**
+    - Development environment for Data Engineering and Model Training.
+    - Uses Ultralytics YOLO11, Albumentations for night-vision simulation, and TFLite Export scripts.
 
 ---
 
 ## Folder Structure
 
 ### Backend
+
 - `index.js` — Entry point, loads environment and starts server
 - `server.js` — Express app setup and route mounting
 - `src/config/` — App and database configuration
@@ -107,6 +145,7 @@ Aranyani/
 - `src/routes/` — API route definitions
 
 ### User-side
+
 - `app/` — Main app screens and layout
 - `assets/` — Images and static assets
 - `constants/` — App-wide constants
@@ -114,15 +153,22 @@ Aranyani/
 - `global.css` — Global styles
 - `tailwind.config.js` — Tailwind CSS configuration
 
+### TinyML
+
+- `01_Training_Workspace/` —   Preprocessing and Training scripts
+
 ---
 
 ## Tech Stack
+
 - **Backend:** Node.js, Express, MongoDB, Mongoose, JWT, dotenv
 - **Frontend:** React Native, Expo, NativeWind (Tailwind CSS), Expo Router, Toastify
+- **Edge AI (TinyML):** Python, YOLO11n, TensorFlow Lite (Int8)
 
 ---
 
 ## Contributing
+
 1. Fork the repository
 2. Create a new branch (`git checkout -b feature/your-feature`)
 3. Commit your changes (`git commit -m 'Add feature'`)
@@ -132,4 +178,5 @@ Aranyani/
 ---
 
 ## License
+
 This project is licensed under the ISC License.
