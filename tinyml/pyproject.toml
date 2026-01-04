@@ -8,4 +8,5 @@ dependencies = [
     "inference>=0.63.2",
     "supervision>=0.27.0",
     "tensorflow-cpu>=2.20.0",
+    "ultralytics>=8.3.246",
 ]
