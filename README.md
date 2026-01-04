@@ -31,7 +31,7 @@ Aranyani/
 ├── backend/                # Node.js/Express backend API
 ├── tinyml/                 # VanaRaksha: Edge AI Wildlife Defense System
 │   └── 01_Training_Workspace/ # Model Training (PC/Cloud)
-│  
+│
 └── user-side/              # React Native (Expo) frontend app
 ```
 
@@ -57,6 +57,7 @@ Aranyani/
    ```
 
 2. **Configure environment:**
+
    - Create a `.env` file in `backend/` with your MongoDB URI and JWT secret:
 
      ```env
@@ -127,8 +128,8 @@ VanaRaksha ("Forest Guard") is the offline, edge-AI component of Aranyani design
 ### Architecture
 
 1. **Training Workspace (`tinyml/01_Training_Workspace`):**
-    - Development environment for Data Engineering and Model Training.
-    - Uses Ultralytics YOLO11, Albumentations for night-vision simulation, and TFLite Export scripts.
+   - Development environment for Data Engineering and Model Training.
+   - Uses Ultralytics YOLO11, Albumentations for night-vision simulation, and TFLite Export scripts.
 
 ---
 
@@ -155,7 +156,7 @@ VanaRaksha ("Forest Guard") is the offline, edge-AI component of Aranyani design
 
 ### TinyML
 
-- `01_Training_Workspace/` —   Preprocessing and Training scripts
+- `01_Training_Workspace/` — Preprocessing and Training scripts
 
 ---
 
