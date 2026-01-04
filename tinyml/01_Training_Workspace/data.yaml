@@ -1,0 +1,13 @@
+path: d:/Project/Aranyani/tinyml/01_Training_Workspace/data/processed  # absolute path
+train: train/images
+val: val/images
+test: test/images
+
+# Classes
+names:
+  0: Elephant
+  1: Wild Boar
+  2: Cattle
+  3: Leopard
+  4: Cheetah
+  5: Human
