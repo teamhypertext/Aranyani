@@ -1,9 +1,3 @@
-/**
- * Utils barrel export
- * Re-exports all utility functions and types
- */
-
-// Device utilities
 export {
   getDeviceStatus,
   openBatterySettings,
@@ -11,11 +5,9 @@ export {
   type DeviceStatus,
 } from "./device";
 
-// Motion detection utilities
 export {
-  calculateFrameSignature,
-  detectMotion,
+  getFrameData,
+  compareFrames,
   formatDetectionTime,
+  type FrameData,
 } from "./motionDetection";
-
-// Permission utilities are exported separately as they have their own import path

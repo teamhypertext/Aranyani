@@ -7,9 +7,6 @@ interface LiveStatsCardProps {
   processingRate?: string;
 }
 
-/**
- * Card showing live monitoring statistics
- */
 export function LiveStatsCard({
   framesProcessed,
   detectionsToday,
@@ -39,9 +36,6 @@ interface LastDetectionCardProps {
   detectionTime: string;
 }
 
-/**
- * Card showing the last detected motion with thumbnail
- */
 export function LastDetectionCard({ imageUri, detectionTime }: LastDetectionCardProps) {
   return (
     <View style={styles.detectionContainer}>

@@ -8,9 +8,6 @@ interface StatusCardProps {
   isDark?: boolean;
 }
 
-/**
- * Reusable status card component for displaying device metrics
- */
 export function StatusCard({ label, value, isActive, isDark = false }: StatusCardProps) {
   return (
     <View style={[styles.card, isDark && styles.cardDark]}>

@@ -5,9 +5,6 @@ interface BatteryWarningBannerProps {
   onOpenSettings: () => void;
 }
 
-/**
- * Banner shown when battery saver mode is not enabled
- */
 export function BatteryWarningBanner({ onOpenSettings }: BatteryWarningBannerProps) {
   return (
     <View style={styles.container}>

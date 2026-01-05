@@ -6,9 +6,6 @@ export interface PermissionStatus {
   location: boolean;
 }
 
-/**
- * Request camera permission
- */
 export async function requestCameraPermission(): Promise<boolean> {
   try {
     const result = await Camera.requestCameraPermissionsAsync();
@@ -19,9 +16,6 @@ export async function requestCameraPermission(): Promise<boolean> {
   }
 }
 
-/**
- * Request location permission
- */
 export async function requestLocationPermission(): Promise<boolean> {
   try {
     const result = await Location.requestForegroundPermissionsAsync();
@@ -32,19 +26,12 @@ export async function requestLocationPermission(): Promise<boolean> {
   }
 }
 
-/**
- * Request all required permissions
- */
 export async function requestAllPermissions(): Promise<PermissionStatus> {
   const camera = await requestCameraPermission();
   const location = await requestLocationPermission();
-  
   return { camera, location };
 }
 
-/**
- * Check if camera permission is granted
- */
 export async function checkCameraPermission(): Promise<boolean> {
   try {
     const result = await Camera.getCameraPermissionsAsync();
@@ -55,9 +42,6 @@ export async function checkCameraPermission(): Promise<boolean> {
   }
 }
 
-/**
- * Check if location permission is granted
- */
 export async function checkLocationPermission(): Promise<boolean> {
   try {
     const result = await Location.getForegroundPermissionsAsync();

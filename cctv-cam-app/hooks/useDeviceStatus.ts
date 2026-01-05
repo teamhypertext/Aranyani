@@ -2,10 +2,6 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { getDeviceStatus, type DeviceStatus } from "@/utils";
 import { STATUS_UPDATE_INTERVAL } from "@/constants";
 
-/**
- * Custom hook for managing device status updates
- * Polls device status at regular intervals
- */
 export function useDeviceStatus() {
   const [deviceStatus, setDeviceStatus] = useState<DeviceStatus>({
     isConnected: false,
@@ -28,10 +24,7 @@ export function useDeviceStatus() {
   }, []);
 
   const startStatusUpdates = useCallback(() => {
-    // Get initial status
     updateDeviceStatus();
-    
-    // Start interval for periodic updates
     intervalRef.current = setInterval(updateDeviceStatus, STATUS_UPDATE_INTERVAL);
   }, [updateDeviceStatus]);
 

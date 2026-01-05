@@ -8,9 +8,6 @@ interface BatteryWarningModalProps {
   onCancel: () => void;
 }
 
-/**
- * Modal that warns users about battery saver mode before starting monitoring
- */
 export function BatteryWarningModal({
   visible,
   onOpenSettings,

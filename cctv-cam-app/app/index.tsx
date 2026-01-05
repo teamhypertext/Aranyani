@@ -23,34 +23,24 @@ import { LOW_BATTERY_THRESHOLD } from "@/constants";
 type AppState = "loading" | "permission_denied" | "dashboard";
 type CameraFacing = "front" | "back";
 
-/**
- * Dashboard Screen (Index)
- * Main entry point showing device status and camera controls
- * User can start monitoring from here, which navigates to the monitoring page
- */
 export default function DashboardScreen() {
   const router = useRouter();
   const [appState, setAppState] = useState<AppState>("loading");
   const [statusMessage, setStatusMessage] = useState("Initializing...");
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
 
-  // Use custom hook for device status
   const { deviceStatus, isLoading: isStatusLoading } = useDeviceStatus();
 
-  // Local state
   const [locationEnabled, setLocationEnabled] = useState(false);
   const [cameraFacing, setCameraFacing] = useState<CameraFacing>("back");
   const [showBatteryWarning, setShowBatteryWarning] = useState(false);
 
-  // Initialize app on mount
   useEffect(() => {
     initializeApp();
   }, []);
 
-  // Initialize app - request permissions
   async function initializeApp() {
     try {
-      // Request camera permission
       setStatusMessage("Requesting camera permission...");
       const cameraResult = await requestCameraPermission();
 
@@ -60,12 +50,10 @@ export default function DashboardScreen() {
         return;
       }
 
-      // Request location permission
       setStatusMessage("Requesting location permission...");
       const locationGranted = await requestLocationPermission();
       setLocationEnabled(locationGranted);
 
-      // Go to dashboard
       setAppState("dashboard");
     } catch (error) {
       console.error("Initialization error:", error);
@@ -74,9 +62,7 @@ export default function DashboardScreen() {
     }
   }
 
-  // Handle start monitoring button
   const handleStartMonitoring = useCallback(() => {
-    // Check if battery saver is enabled
     if (!deviceStatus.isLowPowerMode) {
       setShowBatteryWarning(true);
       return;
@@ -84,24 +70,19 @@ export default function DashboardScreen() {
     navigateToMonitoring();
   }, [deviceStatus.isLowPowerMode, cameraFacing]);
 
-  // Navigate to monitoring screen
   const navigateToMonitoring = useCallback(() => {
     setShowBatteryWarning(false);
-    // Using href as string to bypass typed routes until types regenerate
     router.push(`/monitor?cameraFacing=${cameraFacing}` as any);
   }, [router, cameraFacing]);
 
-  // Handle open battery settings
   const handleOpenSettings = useCallback(async () => {
     await openBatterySettings();
   }, []);
 
-  // Toggle camera facing
   const toggleCamera = useCallback(() => {
     setCameraFacing((prev) => (prev === "back" ? "front" : "back"));
   }, []);
 
-  // LOADING STATE
   if (appState === "loading") {
     return (
       <SafeAreaView style={styles.centerContainer}>
@@ -112,7 +93,6 @@ export default function DashboardScreen() {
     );
   }
 
-  // PERMISSION DENIED STATE
   if (appState === "permission_denied") {
     return (
       <SafeAreaView style={styles.centerContainer}>
@@ -126,10 +106,8 @@ export default function DashboardScreen() {
     );
   }
 
-  // DASHBOARD STATE
   return (
     <View style={styles.container}>
-      {/* Battery Warning Modal */}
       <BatteryWarningModal
         visible={showBatteryWarning}
         onOpenSettings={handleOpenSettings}
@@ -138,7 +116,6 @@ export default function DashboardScreen() {
       />
 
       <SafeAreaView style={styles.flex1}>
-        {/* Header */}
         <View style={styles.header}>
           <View style={styles.headerContent}>
             <View>
@@ -148,9 +125,7 @@ export default function DashboardScreen() {
           </View>
         </View>
 
-        {/* Content Area */}
         <View style={styles.contentArea}>
-          {/* Status Grid */}
           <View style={styles.statusGrid}>
             <StatusCard
               label="Internet"
@@ -178,7 +153,6 @@ export default function DashboardScreen() {
             />
           </View>
 
-          {/* Camera Selection Card */}
           <View style={styles.cameraCard}>
             <View>
               <Text style={styles.cameraTitle}>Camera</Text>
@@ -195,12 +169,10 @@ export default function DashboardScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Battery Saver Warning */}
           {!deviceStatus.isLowPowerMode && (
             <BatteryWarningBanner onOpenSettings={handleOpenSettings} />
           )}
 
-          {/* Info Card */}
           <View style={styles.infoCard}>
             <Text style={styles.infoTitle}>📋 Ready to Monitor</Text>
             <Text style={styles.infoText}>
@@ -210,7 +182,6 @@ export default function DashboardScreen() {
           </View>
         </View>
 
-        {/* Action Button */}
         <View style={styles.actionArea}>
           <TouchableOpacity
             style={styles.startButton}
