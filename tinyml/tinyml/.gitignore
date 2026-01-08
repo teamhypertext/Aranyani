@@ -221,3 +221,11 @@ runs/
 
 #venv
 tinyml/
+
+# Model artifacts
+*.npy
+*.tflite
+*.h5
+*.onnx
+/models/
+/weights/
