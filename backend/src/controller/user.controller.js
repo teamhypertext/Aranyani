@@ -2,7 +2,7 @@ import User from "../models/user.models.js";
 
 export const createUser = async (req, res) => {
   try {
-    const { deviceId, username, fcmToken } = req.body;
+    const { deviceId, username, mobileNumber } = req.body;
 
     if (!deviceId) {
       return res.status(400).json({
@@ -15,7 +15,7 @@ export const createUser = async (req, res) => {
 
     if (user) {
       user.username = username || user.username;
-      user.fcmToken = fcmToken || user.fcmToken;
+      user.mobileNumber = mobileNumber || user.mobileNumber;
       await user.save();
 
       return res.status(200).json({
@@ -29,7 +29,7 @@ export const createUser = async (req, res) => {
     user = new User({
       deviceId,
       username,
-      fcmToken,
+      mobileNumber,
     });
 
     await user.save();

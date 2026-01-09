@@ -1,4 +1,37 @@
 import AnimalEvent from "../models/animalrecord.models.js";
+import User from "../models/user.models.js";
+import { sendAnimalAlert } from "../utils/twilio.service.js";
+
+const findAndNotifyNearbyUsers = async (animalRecord, lat, lng) => {
+  try {
+    const nearbyUsers = await User.find({
+      lastLocation: {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [lng, lat],
+          },
+          $maxDistance: 50000,
+        },
+      },
+      mobileNumber: { $exists: true, $ne: null },
+    });
+
+    if (nearbyUsers.length === 0) {
+      return;
+    }
+
+    const notificationResult = await sendAnimalAlert(nearbyUsers, {
+      animalType: animalRecord.animalType,
+      lat,
+      lng,
+    });
+
+    return notificationResult;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const addAnimalRecord = async (req, res) => {
   try {
@@ -23,6 +56,9 @@ export const addAnimalRecord = async (req, res) => {
 
     const savedRecord = await animalEvent.save();
 
+    findAndNotifyNearbyUsers(savedRecord, parseFloat(lat), parseFloat(lng))
+      .catch(error => {});
+
     return res.status(201).json({
       success: true,
       message: "Animal record created successfully",
@@ -30,8 +66,6 @@ export const addAnimalRecord = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Error adding animal record:", error);
-    
     return res.status(500).json({
       success: false,
       message: "Internal Server Error while adding animal record",
@@ -79,7 +113,6 @@ export const getNearbyAnimals = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Error fetching nearby animals:", error);
     return res.status(500).json({
       success: false,
       message: "Internal Server Error while fetching nearby animals",

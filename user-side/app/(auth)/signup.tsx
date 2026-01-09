@@ -10,18 +10,13 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { createUser } from "@/api/user.service";
-import { getDeviceId } from "@/utils/deviceInfo";
 import { Toast } from "toastify-react-native";
 
 export default function SignupScreen() {
   const router = useRouter();
   const [username, setUsername] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
   const [loading, setLoading] = useState(false);
-  const [deviceId, setDeviceId] = useState("");
-
-  useState(() => {
-    getDeviceId().then(setDeviceId);
-  });
 
   const handleSignup = async () => {
     if (!username.trim()) {
@@ -29,9 +24,20 @@ export default function SignupScreen() {
       return;
     }
 
+    if (!mobileNumber.trim()) {
+      Toast.error("Please enter your mobile number");
+      return;
+    }
+
+    const mobileRegex = /^[0-9]{10}$/;
+    if (!mobileRegex.test(mobileNumber.trim())) {
+      Toast.error("Please enter a valid 10-digit mobile number");
+      return;
+    }
+
     setLoading(true);
     try {
-      await createUser(username.trim());
+      await createUser(username.trim(), mobileNumber.trim());
       Toast.success("Account created successfully!");
       router.replace("/(tabs)" as any);
     } catch (error: any) {
@@ -72,18 +78,26 @@ export default function SignupScreen() {
             />
           </View>
 
-          {deviceId && (
-            <View>
-              <Text className="text-sm font-medium text-foreground mb-2">
-                Device ID
-              </Text>
-              <View className="bg-muted border border-border rounded-2xl px-4 py-4">
-                <Text className="text-muted-foreground text-xs font-mono">
-                  {deviceId}
-                </Text>
+          <View className="mt-5">
+            <Text className="text-sm font-medium text-foreground mb-2">
+              Mobile Number (India)
+            </Text>
+            <View className="flex-row items-center bg-card border border-border rounded-2xl overflow-hidden">
+              <View className="bg-muted px-4 py-4 border-r border-border">
+                <Text className="text-foreground font-semibold text-base">+91</Text>
               </View>
+              <TextInput
+                value={mobileNumber}
+                onChangeText={setMobileNumber}
+                placeholder="Enter 10-digit number"
+                placeholderTextColor="#6c8574"
+                className="flex-1 px-4 py-4 text-foreground text-base"
+                keyboardType="phone-pad"
+                maxLength={10}
+                editable={!loading}
+              />
             </View>
-          )}
+          </View>
 
           <TouchableOpacity
             onPress={handleSignup}
