@@ -1,12 +1,12 @@
 import api from "./axios";
 import { getDeviceId } from "@/utils/deviceInfo";
 
-export const createUser = async (username: string, fcmToken?: string) => {
+export const createUser = async (username: string, mobileNumber: string) => {
   const deviceId = await getDeviceId();
   const response = await api.post("/users/create", {
     deviceId,
     username,
-    fcmToken,
+    mobileNumber,
   });
   return response.data;
 };

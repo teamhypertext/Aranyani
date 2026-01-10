@@ -14,9 +14,15 @@ const userSchema = new mongoose.Schema(
       trim: true
     },
 
-    fcmToken: {
+    mobileNumber: {
       type: String,
-      trim: true
+      trim: true,
+      validate: {
+        validator: function(v) {
+          return /^[0-9]{10}$/.test(v);
+        },
+        message: props => `${props.value} is not a valid 10-digit mobile number!`
+      }
     },
 
     lastLocation: {
