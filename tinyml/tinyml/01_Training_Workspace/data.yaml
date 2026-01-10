@@ -1,4 +1,4 @@
-path: d:\Project\Aranyani\tinyml\tinyml\01_Training_Workspace\data\processed
+path: /mnt/d/Project/Aranyani/tinyml/tinyml/01_Training_Workspace/data/processed
 train: train/images
 val: val/images
 test: test/images

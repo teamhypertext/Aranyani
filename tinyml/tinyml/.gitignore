@@ -224,7 +224,7 @@ tinyml/
 
 # Model artifacts
 *.npy
-*.tflite
+# *.tflite
 *.h5
 *.onnx
 /models/
