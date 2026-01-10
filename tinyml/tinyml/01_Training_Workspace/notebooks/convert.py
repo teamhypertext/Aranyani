@@ -1,8 +1,8 @@
 from ultralytics import YOLO
 
 # Paths
-MODEL_PATH = r"d:\Project\Aranyani\tinyml\tinyml\01_Training_Workspace\models\version_1\weights\best.pt"
-DATA_YAML  = r"d:\Project\Aranyani\tinyml\tinyml\01_Training_Workspace\data.yaml"
+MODEL_PATH = r"/mnt/d/Project/Aranyani/tinyml/tinyml/01_Training_Workspace/models/version_1/weights/best.pt"
+DATA_YAML  = r"/mnt/d/Project/Aranyani/tinyml/tinyml/01_Training_Workspace/data.yaml"
 
 def convert_to_tflite():
     print(f"Loading model from {MODEL_PATH}")
@@ -13,7 +13,7 @@ def convert_to_tflite():
     # Ultralytics uses the 'data' argument to find images for this.
     model.export(
         format="tflite", 
-        int8=True, 
+        int8=False, 
         data=DATA_YAML, 
         imgsz=640
     )
