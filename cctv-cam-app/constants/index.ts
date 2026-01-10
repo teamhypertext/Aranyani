@@ -14,6 +14,6 @@ export const MIN_CONFIDENCE_THRESHOLD = 25;
 export const EXCLUDED_ANIMALS = ['Human', 'Elephant', 'Cattle'];
 
 // Backend API configuration
-export const API_BASE_URL = 'http://10.15.221.32:3000';
+export const API_BASE_URL = 'https://aranyani.onrender.com';
 export const ANIMAL_RECORDS_ENDPOINT = '/api/v1/animal-records/add';
 export const NODE_ID = 'SENSOR_001';
