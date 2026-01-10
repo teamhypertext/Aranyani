@@ -1,6 +1,16 @@
 import AnimalEvent from "../models/animalrecord.models.js";
 import User from "../models/user.models.js";
 import { sendAnimalAlert } from "../utils/twilio.service.js";
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const findAndNotifyNearbyUsers = async (animalRecord, lat, lng) => {
   try {
@@ -35,13 +45,33 @@ const findAndNotifyNearbyUsers = async (animalRecord, lat, lng) => {
 
 export const addAnimalRecord = async (req, res) => {
   try {
-    const { animalType, nodeId, lat, lng, img_url } = req.body;
+    const { animalType, nodeId, lat, lng, imageBase64 } = req.body;
 
     if (!animalType || !nodeId || lat === undefined || lng === undefined) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields. Please provide animalType, nodeId, lat, and lng.",
       });
+    }
+
+    let img_url = null;
+
+    if (imageBase64) {
+      try {
+        console.log('[Cloudinary] Uploading image from base64...');
+        const uploadResponse = await cloudinary.uploader.upload(
+          `data:image/jpeg;base64,${imageBase64}`,
+          {
+            folder: 'aranyani-detections',
+            resource_type: 'image',
+          }
+        );
+        img_url = uploadResponse.secure_url;
+        console.log('[Cloudinary] Upload successful:', img_url);
+      } catch (uploadError) {
+        console.error('[Cloudinary] Upload failed:', uploadError.message);
+        // Continue without image if upload fails
+      }
     }
 
     const animalEvent = new AnimalEvent({

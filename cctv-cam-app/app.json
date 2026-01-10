@@ -31,13 +31,6 @@
         "CAMERA",
         "WAKE_LOCK",
         "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO",
-        "ACCESS_COARSE_LOCATION",
-        "ACCESS_FINE_LOCATION",
-        "FOREGROUND_SERVICE",
-        "CAMERA",
-        "WAKE_LOCK",
-        "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.nikhilkole.aranyanisensor"
@@ -66,11 +59,18 @@
           }
         }
       ],
-      "react-native-vision-camera"
+      "react-native-vision-camera",
+      "react-native-fast-tflite"
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d3ab1e5a-0924-4dbb-b573-633f2cf702f5"
+      }
     }
   }
 }

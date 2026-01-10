@@ -86,7 +86,6 @@ export default function DashboardScreen() {
   if (appState === "loading") {
     return (
       <SafeAreaView style={styles.centerContainer}>
-        <Text style={styles.icon}>🌲</Text>
         <ActivityIndicator size="large" color="#4a7c59" />
         <Text style={styles.statusText}>{statusMessage}</Text>
       </SafeAreaView>
