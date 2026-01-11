@@ -10,13 +10,13 @@ def train_model():
     # imgsz: 640 (image resolution)
     # project: saving models
     results = model.train(
-        data=r"d:\Project\Aranyani\tinyml\01_Training_Workspace\data.yaml",
+        data=r"D:\tinyml\tinyml\01_Training_Workspace\data.yaml",
         epochs=50,
         imgsz=640,
-        project=r"d:\Project\Aranyani\tinyml\01_Training_Workspace\models",
-        name="vana_raksha_v1",
+        project=r"D:\tinyml\tinyml\01_Training_Workspace\models",
+        name="version_1",
         batch=16,     
-        device='cpu'  
+        device=0 
     )
     
    

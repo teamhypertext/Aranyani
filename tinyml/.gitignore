@@ -215,3 +215,17 @@ data/
 
 # Deployment
 02_Deployment_App/
+
+#runs
+runs/
+
+#venv
+tinyml/
+
+# Model artifacts
+*.npy
+# *.tflite
+*.h5
+*.onnx
+/models/
+/weights/
