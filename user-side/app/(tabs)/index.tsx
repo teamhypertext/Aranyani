@@ -95,7 +95,7 @@ export default function MapScreen() {
     const now = new Date();
     const detected = new Date(detectedAt);
     const diffTime = Math.abs(now.getTime() - detected.getTime());
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
   };
 
@@ -119,12 +119,17 @@ export default function MapScreen() {
       const result = await Location.reverseGeocodeAsync({ latitude: lat, longitude: lng });
       if (result && result.length > 0) {
         const place = result[0];
-        const parts = [
-          place.name,
-          place.city || place.subregion,
-          place.region,
-        ].filter(Boolean);
-        return parts.join(", ");
+        const locationDetails = [];
+        
+        if (place.street) locationDetails.push(place.street);
+        if (place.district || place.subregion) locationDetails.push(place.district || place.subregion);
+        if (place.city) locationDetails.push(place.city);
+        
+        if (locationDetails.length === 0) {
+          locationDetails.push(place.region || "nearby area");
+        }
+        
+        return locationDetails.join(", ");
       }
       return `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
     } catch (error) {
@@ -145,15 +150,15 @@ export default function MapScreen() {
   const getTimeAgo = (detectedAt: string): string => {
     const days = getDaysSinceDetection(detectedAt);
     
-    if (days < 1) {
+    if (days === 0) {
       const hours = Math.floor((new Date().getTime() - new Date(detectedAt).getTime()) / (1000 * 60 * 60));
       if (hours < 1) {
         const minutes = Math.floor((new Date().getTime() - new Date(detectedAt).getTime()) / (1000 * 60));
-        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+        return minutes < 1 ? 'Just now' : `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
       }
-      return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+      return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
     } else if (days === 1) {
-      return "1 day ago";
+      return "Yesterday";
     } else {
       return `${days} days ago`;
     }
