@@ -1,6 +1,6 @@
 description: Ultralytics YOLO11n model trained on D:\tinyml\tinyml\01_Training_Workspace\data.yaml
 author: Ultralytics
-date: '2026-01-10T06:21:19.931682'
+date: '2026-01-11T13:36:55.626732'
 version: 8.3.246
 license: AGPL-3.0 License (https://ultralytics.com/license)
 docs: https://docs.ultralytics.com
@@ -21,6 +21,6 @@ args:
   batch: 1
   fraction: 1.0
   half: false
-  int8: false
+  int8: true
   nms: false
 channels: 3
