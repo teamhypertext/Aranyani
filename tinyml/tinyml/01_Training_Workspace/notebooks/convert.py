@@ -13,9 +13,10 @@ def convert_to_tflite():
     # Ultralytics uses the 'data' argument to find images for this.
     model.export(
         format="tflite", 
-        int8=False, 
+        int8=True, 
         data=DATA_YAML, 
-        imgsz=640
+        imgsz=640,
+        batch=1
     )
     print("Conversion Complete.")
 
